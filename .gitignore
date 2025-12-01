@@ -1,0 +1,8 @@
+# Jupyter notebook checkpoints
+.ipynb_checkpoints/
+
+# VSCode / Jupyter virtual docs
+.virtual_documents/
+
+# Data folder
+data/
