@@ -22,7 +22,7 @@ res_df <- as.data.frame(res)
 res_df$ensembl_id <- rownames(res_df)
 
 # ===== Map Ensembl IDs to gene symbols =====
-gtf <- read.table("data/gencode.v49.annotation.gtf", 
+gtf <- read.table("data/gencode.v25.annotation.gtf", 
                   sep="\t", 
                   quote="", 
                   comment.char="#", 
@@ -73,33 +73,6 @@ res_df$regulation[res_df$padj < padj_threshold &
                     res_df$log2FoldChange < -lfc_threshold] <- "Up in PT"
 res_df$regulation <- factor(res_df$regulation, 
                             levels = c("Up in CTC", "NS", "Up in PT"))
-
-# ===== Hardcode top genes from paper =====
-top_genes_pt_paper <- c("IGF2","TIMP3","MGP","MUC1","SCARNA7")
-top_genes_ctc_paper <- c("HBB","HAND2","OR52H1","CATSPER4","CLRN1")
-
-# ===== Find top 5 genes from YOUR DESeq2 analysis =====
-top_genes_pt_mine <- res_df %>%
-  filter(regulation == "Up in PT") %>%
-  arrange(padj, desc(abs(log2FoldChange))) %>%
-  head(5) %>%
-  pull(gene_symbol)
-
-top_genes_ctc_mine <- res_df %>%
-  filter(regulation == "Up in CTC") %>%
-  arrange(padj, desc(abs(log2FoldChange))) %>%
-  head(5) %>%
-  pull(gene_symbol)
-
-# ===== Combine all genes to label =====
-top_genes_all <- unique(c(top_genes_pt_paper, 
-                          top_genes_ctc_paper, 
-                          top_genes_pt_mine, 
-                          top_genes_ctc_mine))
-
-res_df$label <- ifelse(res_df$gene_symbol %in% top_genes_all, 
-                       res_df$gene_symbol, 
-                       "")
 
 # ===== Save results for Python =====
 write.table(res_df, 
