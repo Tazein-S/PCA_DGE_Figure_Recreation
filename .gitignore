@@ -6,3 +6,6 @@
 
 # Data folder
 data/
+
+# Merged Count Matrix
+merged_counts_matrix.txt

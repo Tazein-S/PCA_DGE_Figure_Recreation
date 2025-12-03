@@ -14,8 +14,8 @@ dge_coldata <- coldata[coldata$group %in% c("CTC","PT"), , drop=FALSE]
 # edgeR differential expression
 y <- DGEList(counts = dge_counts, group = dge_coldata$group)
 
-# keep genes with at least 100 CPM in 2 samples
-keep <- rowSums(cpm(y) > 100) >= 2
+# keep genes with at least 10 CPM in 2 samples
+keep <- rowSums(cpm(y) > 10) >= 2
 y <- y[keep, ]
 y$samples$lib.size <- colSums(y$counts)
 
@@ -92,7 +92,7 @@ col_order <- c("gene_symbol", "ensembl_id", "ensembl_id_clean", "gene_name",
 res_df <- res_df[, col_order]
 
 # Optional: set rownames to gene symbols
-rownames(res_df) <- res_df$gene_symbol
+#rownames(res_df) <- res_df$gene_symbol
 
 ### ==========================================================
 ### 🔥 Output results
