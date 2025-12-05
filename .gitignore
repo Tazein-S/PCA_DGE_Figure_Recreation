@@ -9,3 +9,8 @@ data/
 
 # Merged Count Matrix
 merged_counts_matrix.txt
+
+# ignore the edgeR results
+edgeR_all_DEGs_CTC_vs_PT_geneSymbols.txt
+edgeR_significant_DEGs_CTC_vs_PT_geneSymbols.txt
+
